@@ -59,12 +59,12 @@ namespace dod
             for (int i = 0; i < cells.Count; i++) {
                 var cell = cells[i];
                 cell.ReduceMass();
-                foreach (var food in foods) // чекаєм чи попалась їжа в радіумі з'їдання
+                foreach (var food in foods) // чекаєм чи попалась їжа в радіусі з'їдання
                 {
                     if (cell.GetDistanceToPoint(food.x, food.y) < cell.radius)
                     {
                         food.Respawn(this);
-                        cell.IncreaseMass(100);
+                        cell.IncreaseMass(food.mass);
                     }
                 }
                 for (int j = 0; j < cells.Count; j++) // тепер чекаєм чи попалвсь клітина в радіусі з'їдання
@@ -74,11 +74,9 @@ namespace dod
                     if (cell.GetDistanceToPoint(other.x + other.radius, other.y + other.radius) < cell.radius &&
                         cell.CompareTo(other) == 1)
                     {
-                        if (/*cell is Player && other is Cell1 && */!other.isUsedPower && !(other is Player))
+                        if (/*cell is Player && other is Cell1 && */!other.isUsedPower && other is Cell1) // бот може телепортуватись
                         {
-
-                            other.SuperPower();
-                            
+                            other.SuperPower();                          
                         }
                         else
                         {

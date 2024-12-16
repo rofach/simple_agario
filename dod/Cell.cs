@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -20,7 +21,7 @@ namespace dod
         protected static Random rand = new Random();
         protected Point targetPoint;
         protected Form1 form;
-        protected int speed = 1;
+        protected double speed;
         public bool isUsedPower = false;
 
         protected bool getPoint = false;
@@ -33,22 +34,42 @@ namespace dod
             x = rand.Next(0, form.ClientSize.Width);
             y = rand.Next(0, form.ClientSize.Height);
             color = colors[rand.Next(0, colors.Length)];
-            
+            speed = 1.3;
         }
         
         double CalculateRadius()
         {
             return Math.Sqrt(mass);   
         }
+        double CalculateSpeed()
+        {
+            return 1.3 - (mass - minMass) / 30000.0; 
+        }
+        bool CheckAccelerate()
+        {
+            bool isUse = false;
+            if (this is Player obj)
+            {               
+                isUse = obj.isNowUsingPower;
+            }
+            return isUse;
+        }
+
         public void ReduceMass()
         {
-            if (mass > minMass) mass -= mass*0.0002;
+            if (mass > minMass)
+                mass -= mass * 0.0002;
+            if (!CheckAccelerate())
+                speed = CalculateSpeed();
             
+                        
         }
 
         public void IncreaseMass(double mass)
         {
             this.mass += mass;
+            if (!CheckAccelerate())
+                speed = CalculateSpeed();
         }
 
        

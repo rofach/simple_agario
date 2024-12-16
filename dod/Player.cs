@@ -11,6 +11,7 @@ namespace dod
     class Player : Cell
     {
         public bool isUsedPower = false;
+        public bool isNowUsingPower = false;
         public Player(Form1 form) : base(form)
         {
             color = Brushes.DarkBlue;
@@ -49,9 +50,12 @@ namespace dod
         {   if (!isUsedPower)
             {
                 speed = 3;
+                isNowUsingPower = true;
                 await Task.Delay(3000);
+                isNowUsingPower = false;
                 speed = 1;
                 isUsedPower = true;
+                
             }
             await Task.Delay(10000);
             isUsedPower = false;

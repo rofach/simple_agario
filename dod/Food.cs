@@ -11,7 +11,7 @@ namespace dod
 {
     public class Food
     {
-        private double mass;
+        public double mass;
         private Brush color;
         private static Random rand = new Random();
         private static Brush[] colors = { Brushes.Blue, Brushes.Red, Brushes.Orange, Brushes.Green };
@@ -22,7 +22,7 @@ namespace dod
         public Food(Form form)
         {
             //this.form = form;
-            mass = rand.Next(1, 5);
+            mass = rand.Next(10, 200);
             color = colors[rand.Next(0, colors.Length)];
             x = rand.Next(0, form.ClientSize.Width);
             y = rand.Next(0, form.ClientSize.Height);
